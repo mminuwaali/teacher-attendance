@@ -1,0 +1,44 @@
+{% extends 'teacher.html' %}
+
+{% block content %}
+  <section class="w-full flex mt-10 flex-col items-center justify-center gap-2 pb-4 relative before:absolute before:bottom-0 before:w-1/2 before:h-0.5 before:bg-slate-300">
+    <h2 class="text-3xl w-4/6 text-center font-bold capitalize"><span class="font-thin">welcome,</span> {{ user.get_full_name }}</h2>
+    <span class="">here is your class activities</span>
+  </section>
+
+  <section class="w-full flex flex-wrap gap-5 mt-8">
+    <div class="basis-32 grow p-10 shadow-xl items-center justify-center flex flex-col gap-2">
+      <h4 class="capitalize fon-semibold text-slate-700">attendance overview</h4>
+      <div class="w-40 flex items-center justify-center flex-col aspect-1 rounded-full relative before:absolute before:inset-1 before:rounded-full before:bg-white" style="background: conic-gradient(rgb(148 163 184) {{ percentage }}%,rgb(20 20 20 / 0.1) 0%);">
+        <span class="font-bold text-3xl text-slate-700 z-10">{{ percentage }}%</span>
+        <span class="w-4/5 text-xs text-center leading-3 mt-2 -mb-4 text-slate-500 z-10">your average positive marked attendance</span>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2 items-start basis-40 grow-[3] p-4 shadow-xl">
+      <table class="w-full">
+        <caption class="capitalize font-bold text-slate-600" style="caption-side: top;">time table</caption>
+        <thead class="border">
+          <tr class="text-[0.6rem] text-left font-thin text-white bg-blue-700 leading-3">
+            <th class="p-4"></th>
+            {% for time, after in times %}
+              <th class="p-4 py-2 text-center">
+                {{ time|time:'h:i A' }}<div class="">-</div>{{ after|time:'h:i A' }}
+              </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for day, lectures in timetable %}
+            <tr class="text-xs text-left font-thin text-slate-600">
+              <td class="p-4 pr-0 text-[0.6rem] text-white font-black bg-blue-700" style="font-variant: small-caps;">{{ day }}</td>
+              {% for lecture in lectures %}
+                <td class="p-4 py-2 font-bold text-center border border-b-slate-500 hover:bg-blue-700 hover:text-white">{{ lecture.course.name }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% load static heroicons tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% tailwind_css %}
+    <meta charset="UTF-8" />
+    <title>Teacher Attendance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body class="relative w-screen h-screen flex items-center justify-center from-blue-600 to-blue-900 bg-gradient-to-br before:inset-16 before:absolute before:rounded-md before:bg-black before:bg-opacity-80">
+    <a href="{% url 'landing:index-view' %}" style="font-variant: small-caps;" class="text-xs text-white absolute top-5 left-10 font-black"><span class="font-black italic text-blue-400 font-serif text-lg" style="font-variant: normal;">A</span>ttendance</a>
+    {% block content %}
+
+    {% endblock %}
+
+    {% include 'components/messages.html' %}
+  </body>
+  {% block script %}
+
+  {% endblock %}
+</html>

@@ -1,0 +1,31 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% tailwind_css %}
+    <meta charset="UTF-8" />
+    <title>Attendance Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body class="w-screen min-h-screen flex flex-col items-center overflow-x-hidden">
+    <header class="text-white px-[5%] w-4/6 rounded-full p-2 flex items-center gap-10 fixed z-50 top-5 bg-black bg-opacity-60 shadow-md backdrop-blur-md">
+      <a href="{% url 'landing:index-view' %}" style="font-variant: small-caps;" class="text-xs font-black"><span class="font-black italic text-blue-400 font-serif text-lg" style="font-variant: normal;">A</span>ttendance</a>
+
+      <nav class="grow flex items-center justify-end gap-4 text-xs font-semibold" style="font-variant: small-caps;">
+        <a href="{% url 'landing:about-view' %}" class="text-center">about us</a>
+        <a href="{% url 'account:signin-view' %}" class="text-center px-6 py-1 rounded-full text-white bg-blue-500">log in</a>
+      </nav>
+    </header>
+    <main class="grow flex flex-col w-full">
+      {% block content %}
+
+      {% endblock %}
+    </main>
+    <footer class="w-full p-4 bg-black flex items-center justify-center text-center text-white">
+      <span style="font-variant: small-caps;" class="text-center text-sm">all rights reserved @2024</span>
+    </footer>
+
+{% include 'components/messages.html' %}
+  </body>
+</html>

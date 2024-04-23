@@ -1,0 +1,121 @@
+{% extends 'student.html' %}
+
+{% block content %}
+  <section class="w-full h-full flex p-6">
+    <div class="basis-40 h-full p-8 grow flex flex-col gap-4 items-start overflow-auto">
+      <h2 class="text-2xl capitalize font-bold">hello<span class="font-thin">, {{ user.first_name }}</span></h2>
+      <p class="text-xs font-thin w-5/6">Nice to have you back, what an exciting day, get ready and continue your lessons</p>
+      <div class="w-full flex flex-col items-start gap-4">
+        <span class="font-bold text-lg capitalize">today's lectures</span>
+        <div class="w-full flex flex-col gap-2">
+          {% for timetable in timetable_today %}
+            <div class="w-full bg-slate-200 rounded-xl p-4 transition-all hover:scale-105 cursor-pointer flex flex-col gap-2">
+              <h3 class="text-slate-500 font-semibold text-sm uppercase">{{ timetable.course.name }}</h3>
+              <div class="w-full flex items-center justify-between text-xs">
+                <label style="font-variant: small-caps;" class="text-blue-400">day</label>
+                <output class="capitalize">{{ timetable.day }}</output>
+              </div>
+              <div class="w-full flex items-center justify-between text-xs gap-4">
+                <label style="font-variant: small-caps;" class="mr-auto text-blue-400">time</label>
+                <output class="uppercase">From: {{ timetable.start_time|date:'h:i A' }}</output>
+                <output class="uppercase">To: {{ timetable.end_time|date:'h:i A' }}</output>
+              </div>
+            </div>
+            {% empty %}
+            <p class="text-center w-full text-slate-300 mt-4">There's no lecture today</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="basis-80 grow-[3] p-6 rounded-xl bg-slate-200 h-full gap-4 flex flex-wrap">
+      <div class="basis-80 min-h-44 p-4 rounded bg-white grow overflow-auto flex flex-col gap-1">
+        <span class="capitalize text-slate-500 font-semibold">attendance invitations</span>
+        <div class="w-full grow overflow-hidden flex flex-col gap-1">
+          {% for invite in invites %}
+            <div class="w-full rounded-md p-2 px-4 bg-slate-200 flex items-center justify-between">
+              <span class="text-xs capitalize">{{ invite.attendance.timetable.course.name }} - {{ invite.attendance.timetable.course.lecturer }}</span>
+              <div class="flex items-center justify-center text-white gap-1 font-semibold">
+                <form action="{% url 'attendance:invite-view' invite.id %}" method="post" class="flex items-center justify-center">
+                  {% csrf_token %}
+                  <button class="px-3 rounded bg-red-600 text-xs" style="font-variant: small-caps;">reject</button>
+                </form>
+                <form action="{% url 'attendance:invite-view' invite.id %}" method="post" class="flex items-center justify-center">
+                  {% csrf_token %}
+                  <input type="hidden" name="status" value="true" />
+                  <button class="px-3 rounded bg-blue-600 text-xs" style="font-variant: small-caps;">accept</button>
+                </form>
+              </div>
+            </div>
+            {% empty %}
+            <p class="text-center w-full text-slate-300 mt-4">You don't have any invites</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="basis-80 min-h-44 p-4 rounded bg-white grow overflow-auto flex flex-col gap-1">
+        <span class="capitalize text-slate-500 font-semibold">today's pending attendance</span>
+        <div class="w-full grow overflow-hidden flex flex-col gap-1">
+          {% for attendance in pendings %}
+            <div class="w-full flex flex-col p-2 bg-slate-200 rounded">
+              <div class="grow flex flex-col">
+                <div class="w-full flex items-center justify-start text-xs gap-2">
+                  <label style="font-variant: small-caps;" class="text-blue-400">course:</label>
+                  <output class="capitalize">{{ attendance.attendance.timetable.course.name }}</output>
+                </div>
+                <div class="w-full flex items-center justify-start text-xs gap-2">
+                  <label style="font-variant: small-caps;" class="text-blue-400">lecturer:</label>
+                  <output class="capitalize">{{ attendance.attendance.timetable.course.lecturer }}</output>
+                </div>
+
+                <div class="w-full flex items-center justify-between text-xs gap-4">
+                  <label style="font-variant: small-caps;" class="mr-auto text-blue-400">time</label>
+                  <output class="uppercase">From: {{ attendance.attendance.timetable.start_time|date:'h:i A' }}</output>
+                  <output class="uppercase">To: {{ attendance.attendance.timetable.end_time|date:'h:i A' }}</output>
+                </div>
+              </div>
+              <div class="flex w-full items-center justify-end mt-4 text-white gap-1 text-xs">
+                <form action="{% url 'attendance:attendance-view' attendance.id %}" method="post" class="flex items-center justify-center">
+                  {% csrf_token %}
+                  <button class="px-3 rounded bg-red-300" style="font-variant: small-caps;">absent</button>
+                </form>
+                <form action="{% url 'attendance:attendance-view' attendance.id %}" method="post" class="flex items-center justify-center">
+                  {% csrf_token %}
+                  <input type="hidden" name="status" value="true" />
+                  <button class="px-3 rounded bg-blue-300" style="font-variant: small-caps;">present</button>
+                </form>
+              </div>
+            </div>
+            {% empty %}
+            <p class="text-center w-full text-slate-300 mt-4">No attendance for today</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="basis-80 max-h-64 p-4 rounded bg-white grow overflow-auto flex flex-col gap-1">
+        <table class="w-full">
+          <caption class="capitalize text-slate-500 font-semibold mb-4 text-left">history</caption>
+          <thead class="">
+            <tr class="capitalize text-xs text-left text-slate-500">
+              <th class="border p-2 px-4 uppercase">id</th>
+              <th class="border p-2 px-4">status</th>
+              <th class="border p-2 px-4">course</th>
+              <th class="border p-2 px-4">lecturer</th>
+              <th class="border p-2 px-4">date and time</th>
+            </tr>
+          </thead>
+          <tbody class="text-xs">
+            {% for attendance in histories %}
+              <tr class="">
+                <td class="border p-3">{{ forloop.counter }}</td>
+                <td class="border p-3">{{ attendance.status|yesno:'present,absent' }}</td>
+                <td class="border p-3 uppercase">{{ attendance.attendance.timetable.course.name }}</td>
+                <td class="border p-3 capitalize">{{ attendance.attendance.timetable.course.lecturer }}</td>
+                <td class="border p-3">{{ attendance.updated_at|date:'D, d M, Y ~ h:i A' }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+{% endblock %}

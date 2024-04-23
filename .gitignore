@@ -1,0 +1,5 @@
+.git/
+.env/
+media/
+static/
+website/db.sqlite*

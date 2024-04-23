@@ -1,0 +1,46 @@
+{% extends 'landing.html' %}
+{% load static %}
+
+{% block content %}
+  <section class="w-full flex relative h-[33rem]">
+    <div class="w-full h-full flex flex-col items-center justify-center bg-black bg-opacity-80 bg-blend-overlay z-10 text-white gap-4">
+      <h1 class="text-[clamp(3rem,4.5vw,6rem)] font-bold text-center capitalize w-4/6 leading-[1]">Welcome to the future of discipline</h1>
+      <span class="text-center relative before:absolute before:mr-2 before:right-full before:w-20 before:h-1 before:bg-white before:top-1/2 / after:absolute after:left-full after:w-20 after:h-1 after:bg-white after:top-1/2 after:ml-2" style="font-variant: small-caps;">start marking</span>
+    </div>
+  </section>
+
+  <section class="w-full flex flex-wrap justify-center gap-6 px-[10%] p-10">
+    <a href="#" class="basis-80 h-96 relative overflow-hidden group">
+      <img src="{% static 'images/design.jpg' %}" alt="" class="absolute w-full h-full transition-all group-hover:scale-110 object-cover" />
+      <div class="w-full h-full flex flex-col items-center justify-center text-white bg-black bg-opacity-60 z-20 absolute">
+        <h2 class="uppercase font-semibold text-2xl">seamless design</h2>
+        <span style="font-variant: small-caps;" class="lowercase text-xs">user friendly experience</span>
+      </div>
+    </a>
+    <a href="#" class="basis-80 h-96 relative overflow-hidden group">
+      <img src="{% static 'images/design.jpg' %}" alt="" class="absolute w-full h-full transition-all group-hover:scale-110 object-cover" />
+      <div class="w-full h-full flex flex-col items-center justify-center text-white bg-black bg-opacity-60 z-20 absolute">
+        <h2 class="uppercase font-semibold text-2xl">straight forward</h2>
+        <span style="font-variant: small-caps;" class="lowercase text-xs">easy of use of the app</span>
+      </div>
+    </a>
+    <a href="#" class="basis-80 h-96 relative overflow-hidden group">
+      <img src="{% static 'images/design.jpg' %}" alt="" class="absolute w-full h-full transition-all group-hover:scale-110 object-cover" />
+      <div class="w-full h-full flex flex-col items-center justify-center text-white bg-black bg-opacity-60 z-20 absolute">
+        <h2 class="uppercase font-semibold text-2xl">keep anonymous</h2>
+        <span style="font-variant: small-caps;" class="lowercase text-xs">privacy is enforced for the student</span>
+      </div>
+    </a>
+  </section>
+
+  <section class="w-full p-[8%]">
+    <div class="text-white w-full h-80 rounded-md from-blue-500 to-blue-900 bg-gradient-to-b flex flex-col items-center justify-center gap-4">
+      <h2 class="text-4xl font-bold">Start the Journey Now</h2>
+      <p class="text-center w-1/3 md:w-8/12">Join thousands of students.</p>
+      <div class="mt-4 flex items-center justify-center gap-6 font-semibold text-sm">
+        <a href="{% url 'account:signin-view' %}" class="px-4 py-2 rounded-md flex items-center text-slate-900 bg-white">Get Started</a>
+        <a href="{% url 'landing:about-view' %}" class="">Learn More</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
