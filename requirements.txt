@@ -8,6 +8,7 @@ click==8.1.7
 cookiecutter==2.6.0
 Django==5.0.4
 django-browser-reload==1.12.1
+django-crontab==0.7.1
 django-jazzmin==2.6.1
 django-tailwind==3.8.0
 heroicons==2.6.0

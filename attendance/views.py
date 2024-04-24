@@ -43,11 +43,24 @@ def invite_view(request, id):
 def attendance_view(request, id):
     if request.method == "POST":
         status = bool(request.POST.get("status"))
-        print(status)
+
         try:
             invite = models.StudentAttendance.objects.get(id=id)
             invite.status = status
             invite.save()
+
+            class_attendance = models.StudentAttendance.objects.filter(
+                attendance=invite.attendance
+            )
+
+            if class_attendance.filter(status__isnull=True).count() == 0:
+                positive_count = class_attendance.filter(status=True).count()
+                negative_count = class_attendance.filter(status=False).count()
+
+            teacher_attendance = True if positive_count >= negative_count else False
+
+            invite.attendance.status = teacher_attendance
+            invite.attendance.save()
 
             messages.success(request, "Attendance marked")
         except:
