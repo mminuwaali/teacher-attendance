@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd party apps
     "django_browser_reload",
+    "django_crontab",
     "heroicons",
     "tailwind",
     "theme",
@@ -155,3 +156,7 @@ STATIC_ROOT = BASE_DIR / "static"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CRONJOBS = [
+    ('0 0 * * *', 'attendance.management.commands.generate_request'),
+]
